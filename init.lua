@@ -105,8 +105,10 @@ vim.opt.number = true
 -- vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
-vim.opt.mouse = 'a'
-
+-- vim.opt.mouse = 'a'
+-- Disable mouse mode
+vim.opt.mouse = ''
+--
 -- Don't show the mode, since it's already in status line
 vim.opt.showmode = false
 
@@ -810,7 +812,7 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {
   ui = {
     -- If you have a Nerd Font, set icons to an empty table which will use the
