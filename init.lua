@@ -187,6 +187,7 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 -- Jonas KeyMaps
 vim.keymap.set('n', '<leader>T', '<cmd>edit ~/docs/todo.md<CR>', { desc = 'Got stuff todo?' })
 vim.keymap.set('n', '<leader>D', '<cmd>edit ~/docs/done.md<CR>', { desc = 'Got stuff todo?' })
+vim.keymap.set('n', '<leader>e', '<cmd>Neotree<CR>', { desc = 'Got stuff todo?' })
 
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -354,6 +355,7 @@ require('lazy').setup({
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
         { '<leader>T', group = 'Todo', mode = { 'n', 'v' } },
         { '<leader>D', group = 'Done', mode = { 'n', 'v' } },
+        { '<leader>e', group = 'Explorer toggle', mode = { 'n', 'v' } },
       },
     },
   },
@@ -677,6 +679,21 @@ require('lazy').setup({
       --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+      --
+      require('lspconfig').pyright.setup {
+        settings = {
+          pyright = {
+            -- Using Ruff's import organizer
+            disableOrganizeImports = true,
+          },
+          python = {
+            analysis = {
+              -- Ignore all files for analysis to exclusively use Ruff for linting
+              ignore = { '*' },
+            },
+          },
+        },
+      }
       local servers = {
         -- clangd = {},
         -- gopls = {},
@@ -776,7 +793,10 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = {
+          'ruff_fix',
+          'ruff_format',
+        },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
@@ -991,7 +1011,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
